@@ -1,4 +1,6 @@
 package Class;
+import java.util.ArrayList;
+
 import Interface.Combat;
 
 public class Player extends Entity implements Combat {
@@ -15,6 +17,20 @@ public class Player extends Entity implements Combat {
     }
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public String toString(Role role, Item[] inventory, ArrayList<String> allItem) {
+        String listItem = "";
+        for (Item i : inventory) {
+            if(i.getId() != -1) { listItem += i.getQuantity() + "x " + allItem.get(i.getId()) + ","; }
+        }
+        if(listItem == "") { listItem = "Kosong"; }
+        
+
+        return  "Nama\t: " + this.name + 
+                "\nHealth\t: " + this.health + 
+                "\nRole\t: " + role.getName() +
+                "\nItem\t: " + listItem;
     }
 
     @Override

@@ -2,7 +2,7 @@ package Class;
 
 abstract class Entity {
     String name;
-    int health;
+    int health = 100;
 
     Entity() {}
     Entity(String name, int health) {
