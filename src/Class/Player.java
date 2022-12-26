@@ -55,13 +55,21 @@ public class Player extends Entity implements Combat {
     public void hurt() {
         System.out.println("Ugh..");
     }
+    
+    @Override
+    public int attack() {
+        return 5;
+    }
+    @Override
+    public int defend() {
+        return 0;
+    }
 
-    @Override
-    public void atack() {
-        
+    public int attack(Role role) {
+        return role.getStrength();
     }
-    @Override
-    public void defend() {
-        
+    public int defend(Role role) {
+        return role.getEndurance();
     }
+
 }

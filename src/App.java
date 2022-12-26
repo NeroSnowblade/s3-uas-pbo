@@ -19,26 +19,22 @@ public class App {
         role[1] = new Role("Warrior", 8, 4, 5);
         role[2] = new Role("Guardian", 5, 3, 9);
     }
-
     public static void initMonster(Monster[] monster) {
         monster[0] = new Monster("Bebelac", 10, 5);
         monster[1] = new Monster("Pampam", 10, 7);
         monster[2] = new Monster("Atan", 10, 9);
     }
-
     public static void initItem(ArrayList<String> item) {
         item.add("Kunci Emas");
         item.add("Koin");
         item.add("P3K");
         item.add("Pisau");
     }
-
     public static void initInventory(Item[] inventory) {
         for (int i = 0; i < inventory.length; i++) {
             inventory[i] = new Item();
         }
     }
-
     public static void initMazeEasy(Maze[][] maze) {
         maze[0][0] = new Maze(false, true, true, false);
         maze[0][1] = new Maze(false, true, false, true);
@@ -60,7 +56,6 @@ public class App {
         maze[3][2] = new Maze(true, true, false, true);
         maze[3][3] = new Maze(false, false, false, true, 0); // Kunci
     }
-
     public static void initMazeHard(Maze[][] maze) {
         maze[0][0] = new Maze(false, false, true, false); // Start
         maze[0][1] = new Maze(false, true, true, false);
@@ -160,7 +155,7 @@ public class App {
         return temp;
     }
 
-    public static void vGame(Player player, Role[] role, Maze[][] maze, ArrayList<String> item, Item[] inventory, boolean finish, boolean death, String playerStatus, int iX, int iY) {
+    public static void vGame(Player player, Monster[] monster, Role[] role, Maze[][] maze, ArrayList<String> item, Item[] inventory, boolean finish, boolean death, String playerStatus, int iX, int iY) {
         player.setPos(iX, iY);
         do {
             int pX = player.getPosX(), pY = player.getPosY();
@@ -183,6 +178,49 @@ public class App {
                     }
                 } while (!add && i < inventory.length);
             }
+
+            if(itemLantai == -5){
+                int randEnemy = random.nextInt(monster.length);
+                Monster musuh = monster[randEnemy];
+                int coin = musuh.getHealth();
+                int mAttack = musuh.attack();
+                System.out.println("Oh tidak kamu bertemu " + musuh.getName() + "!");
+                do {
+                    if(player.getHealth() < 0) {
+                        death = true; 
+                        return;
+                    }
+                    if(musuh.getHealth() < 0) {
+                        if(inventory[4].getId() != 1) { inventory[4].setId(1); }
+                        inventory[4].setQuantity(inventory[4].getQuantity() + coin);
+                        return;
+                    }
+                    System.out.println("Player HP  : " + player.getHealth());
+                    System.out.println(musuh.getName() + " HP : " + musuh.getHealth());
+                    int randAct = random.nextInt(2);
+                    if(randAct == 0) {System.out.println(musuh.getName() + " akan menyerang!");}
+                    else {System.out.println(musuh.getName() + " nampaknya sedang beristirahat!");}
+                    System.out.println("1. Attack");
+                    System.out.println("2. Defend");
+                    System.out.print("Pilihanmu : ");
+                    int attOption = input.nextInt();
+                    switch(attOption){
+                        case 1:
+                            if(randAct == 0) player.setHealth(player.getHealth() - mAttack);
+                            musuh.setHealth(musuh.getHealth() - player.attack(role[player.getRoleId()]));
+                            break;
+                        case 2:
+                            if(randAct == 0) player.setHealth(player.getHealth() + (player.defend(role[player.getRoleId()]) - mAttack));
+                            break;
+                        default:
+                            pInvalid();
+                            break;
+                    }
+
+                } while(musuh.getHealth() > 0 && player.getHealth() > 0);
+                maze[pY][pX].setItemId(-1);
+            }
+            if(death) { return; }
 
             if (itemLantai == -10) {
                 System.out.println("Kamu Menemukan Pintu Keluar Bergembok!");
@@ -307,9 +345,9 @@ public class App {
                         int difficulty = vSelectDifficulty();
                         boolean finish = false, death = false;
                         if (difficulty == 1) {
-                            vGame(player, role, mazeEasy, item, inventory, finish, death, playerStatus, 0, 1);
+                            vGame(player, monster, role, mazeEasy, item, inventory, finish, death, playerStatus, 0, 1);
                         } else if (difficulty == 2) {
-                            vGame(player, role, mazeHard, item, inventory, finish, death, playerStatus, 0, 0);
+                            vGame(player, monster, role, mazeHard, item, inventory, finish, death, playerStatus, 0, 0);
                         }
                         break;
                     case 2:

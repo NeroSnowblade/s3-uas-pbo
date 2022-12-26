@@ -2,7 +2,7 @@ package Class;
 import Interface.Combat;
 
 public class Monster extends Entity implements Combat {
-    int attack = 0;
+    private int attack = 0;
     public Monster() {};
     public Monster(String name, int health) {
         super(name, health);
@@ -18,13 +18,13 @@ public class Monster extends Entity implements Combat {
     }
 
     @Override
-    public void atack() {
-        
+    public int attack() {
+        return this.attack;
     }
 
     @Override
-    public void defend() {
-        
+    public int defend() {
+        return 0;
     }
 
 

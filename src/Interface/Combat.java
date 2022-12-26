@@ -1,6 +1,6 @@
 package Interface;
 
 public interface Combat {
-    public void atack();
-    public void defend();
+    public int attack();
+    public int defend();
 }
