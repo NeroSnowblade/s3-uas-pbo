@@ -2,6 +2,7 @@ package Class;
 
 public class Maze {
     /* 
+        Hallo
      * -1  : None
      * -5  : Monster
      * -10 : Finish
