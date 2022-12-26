@@ -1,9 +1,11 @@
 package Class;
 
 public class Item {
-    int id = -1, quantity;
+    private int id, quantity;
     
-    public Item() {}
+    public Item() {
+        this.id = -1;
+    }
     public Item(int id, int quantity) {
         this.id = id;
         this.quantity = quantity;

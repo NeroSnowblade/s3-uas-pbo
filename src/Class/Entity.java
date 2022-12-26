@@ -1,8 +1,8 @@
 package Class;
 
 abstract class Entity {
-    String name;
-    int health = 100;
+    private String name;
+    private int health = 100;
 
     Entity() {}
     Entity(String name, int health) {

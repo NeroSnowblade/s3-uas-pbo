@@ -1,6 +1,11 @@
 package Class;
 
 public class Maze {
+    /* 
+     * -1  : None
+     * -5  : Monster
+     * -10 : Finish
+     */
     private int itemId = -1;
     private boolean left = false, right = false, up = false, down = false;
     

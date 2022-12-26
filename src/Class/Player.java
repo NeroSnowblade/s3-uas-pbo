@@ -5,6 +5,7 @@ import Interface.Combat;
 
 public class Player extends Entity implements Combat {
     private int roleId;
+    private int posX, posY;
 
     public Player() {};
     public Player(String name, int health, int roleId) {
@@ -18,18 +19,35 @@ public class Player extends Entity implements Combat {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
+    public int getPosX() {
+        return posX;
+    }
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+    public int getPosY() {
+        return posY;
+    }
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+    public void setPos(int posX, int posY) {
+        this.posX = posX;
+        this.posY = posY;
+    }
 
     public String toString(Role role, Item[] inventory, ArrayList<String> allItem) {
         String listItem = "";
         for (Item i : inventory) {
-            if(i.getId() != -1) { listItem += i.getQuantity() + "x " + allItem.get(i.getId()) + ","; }
+            if(i.getId() != -1) { listItem += i.getQuantity() + "x " + allItem.get(i.getId()) + ", "; }
         }
         if(listItem == "") { listItem = "Kosong"; }
         
 
-        return  "Nama\t: " + this.name + 
-                "\nHealth\t: " + this.health + 
+        return  "Nama\t: " + this.getName() + 
+                "\nHealth\t: " + this.getHealth() + 
                 "\nRole\t: " + role.getName() +
+                "\nPosition: [Z : " + this.getPosX() + " ] [Y : " + this.getPosY() + " ]" +
                 "\nItem\t: " + listItem;
     }
 
